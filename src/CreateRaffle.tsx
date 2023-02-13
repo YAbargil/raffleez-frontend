@@ -10,19 +10,21 @@ import {
   Image,
   Grid,
   NumberInput,
+  Flex,
+  Divider,
 } from "@mantine/core";
 import React, { useState } from "react";
 
 export const CreateRaffle = () => {
-  const [products, setProducts] = useState();
-
-  // Name
-  // Product Id
-  // Quantity
+  const [products, setProducts] = useState([]);
 
   return (
-    <Container>
-      <Title>Create new Raffle</Title>
+    <Container mt="lg">
+      <Flex justify={"space-between"}>
+        <Title>Create new Raffle</Title>
+        <Button>See My Raffles</Button>
+      </Flex>
+      <Divider my="lg" />
       <Grid mt={10}>
         <Grid.Col span={4}>
           <Card shadow="sm" p="lg" radius="md" withBorder>

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
+import * as api from "./api";
 import {
   Title,
+  Text,
+  Box,
   TextInput,
   createStyles,
   PasswordInput,
@@ -12,6 +14,8 @@ import {
   Divider,
   Container,
   Image,
+  Loader,
+  Center,
 } from "@mantine/core";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -52,6 +56,17 @@ const useStyles = createStyles((theme, { floating }) => ({
   },
 }));
 
+function PasswordRequirement({ meets, label }) {
+  return (
+    <Text color={meets ? "teal" : "red"} mt={5} size="sm">
+      <Center inline>
+        {meets ? "✅" : "❌"}
+        <Box ml={7}>{label}</Box>
+      </Center>
+    </Text>
+  );
+}
+
 function PasswordInputComponent({ value = "", onChange }) {
   const [focused, setFocused] = useState(false);
   const { classes } = useStyles({
@@ -70,6 +85,12 @@ function PasswordInputComponent({ value = "", onChange }) {
         onBlur={() => setFocused(false)}
         mt="md"
       />
+      {focused && (
+        <PasswordRequirement
+          label="Has at least 6 characters"
+          meets={value.length > 5}
+        />
+      )}
     </div>
   );
 }
@@ -120,19 +141,23 @@ export function UsernameInput({ value = "", onChange }) {
 
 export default function SignUp() {
   const [mode, setMode] = useState("login");
-  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
   const handleButtonClick = async () => {
-    // const response = await axios.post("localhost:5200", {
-    //   email,
-    //   password,
-    //   username,
-    // });
-    navigate("/create-raffle");
+    setLoading(true);
+    try {
+      const response = await api[mode](username, password);
+      navigate("/create-raffle");
+      window.localStorage.accessToken = response.data.token;
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -160,7 +185,8 @@ export default function SignUp() {
 
           <PasswordInputComponent value={password} onChange={setPassword} />
           <Button mt="md" onClick={handleButtonClick}>
-            {mode === "signup" ? "Sign Up" : "Log In"}
+            {loading && <Loader color="white" size="sm" variant="dots" />}
+            {!loading ? (mode === "signup" ? "Sign Up" : "Log In") : null}
           </Button>
           <Divider my="sm" />
           <NavLink to="/rafflez">
