@@ -1,6 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { TextInput, createStyles, PasswordInput, Button } from "@mantine/core";
+import {
+  Title,
+  TextInput,
+  createStyles,
+  PasswordInput,
+  Button,
+  Flex,
+  Paper,
+  Tabs,
+  Divider,
+  Container,
+  Image,
+} from "@mantine/core";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme, { floating }) => ({
   root: {
@@ -55,6 +68,7 @@ function PasswordInputComponent({ value = "", onChange }) {
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
+        mt="md"
       />
     </div>
   );
@@ -66,8 +80,6 @@ export function EmailInput({ value = "", onChange }) {
     floating: value.trim().length !== 0 || focused,
   });
 
-  console.log("email value", value);
-
   return (
     <TextInput
       label="Email"
@@ -78,8 +90,8 @@ export function EmailInput({ value = "", onChange }) {
       onChange={(e) => onChange(e.target.value)}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
-      mt="md"
       autoComplete="nope"
+      mt="md"
     />
   );
 }
@@ -89,8 +101,6 @@ export function UsernameInput({ value = "", onChange }) {
   const { classes } = useStyles({
     floating: value.trim().length !== 0 || focused,
   });
-
-  console.log("email value", value);
 
   return (
     <TextInput
@@ -102,32 +112,62 @@ export function UsernameInput({ value = "", onChange }) {
       onChange={(e) => onChange(e.target.value)}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
-      mt="md"
       autoComplete="nope"
+      mt="md"
     />
   );
 }
 
 export default function SignUp() {
+  const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const handleButtonClick = async () => {
-    console.log({ email, password, username });
-    const response = await axios.post("localhost:5200", {
-      email,
-      password,
-      username,
-    });
+    // const response = await axios.post("localhost:5200", {
+    //   email,
+    //   password,
+    //   username,
+    // });
+    navigate("/create-raffle");
   };
 
   return (
-    <div>
-      <EmailInput value={email} onChange={setEmail} />
-      <UsernameInput value={username} onChange={setUsername} />
-      <PasswordInputComponent value={password} onChange={setPassword} />
-      <Button onClick={handleButtonClick}>Log In / Sign Up</Button>
-    </div>
+    <Container size="xs" px="xs" my="lg">
+      <Paper shadow="sm" radius="lg" p="xl" withBorder>
+        <Flex direction={"column"} gap={10}>
+          <Image src={`/logo.jpeg`} />
+          {/* <Title align="center" order={1}>
+            Rafflez 👟
+          </Title> */}
+          <Tabs value={mode} variant="pills" defaultValue="first">
+            <Tabs.List position="center">
+              <Tabs.Tab onClick={() => setMode("login")} value="login">
+                Login
+              </Tabs.Tab>
+              <Tabs.Tab onClick={() => setMode("signup")} value="signup">
+                Sign Up
+              </Tabs.Tab>
+            </Tabs.List>
+          </Tabs>
+
+          {/* <EmailInput value={email} onChange={setEmail} /> */}
+
+          <UsernameInput value={username} onChange={setUsername} />
+
+          <PasswordInputComponent value={password} onChange={setPassword} />
+          <Button mt="md" onClick={handleButtonClick}>
+            {mode === "signup" ? "Sign Up" : "Log In"}
+          </Button>
+          <Divider my="sm" />
+          <NavLink to="/rafflez">
+            <Button variant="white">Or Continue as a Guest</Button>
+          </NavLink>
+        </Flex>
+      </Paper>
+    </Container>
   );
 }
