@@ -13,49 +13,74 @@ import {
   Flex,
   Divider,
 } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getProducts } from "./api";
+import { useNavigate, NavLink } from "react-router-dom";
 
 export const CreateRaffle = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<any[]>([]);
+  const navigate = useNavigate();
+
+  const onClickHandler = async () => {
+    try {
+      navigate("/myraffles");
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getProducts();
+      console.log("All prodcuts:", result.data.products);
+      setProducts(result.data.products);
+    };
+    fetchData();
+  }, []);
 
   return (
     <Container mt="lg">
       <Flex justify={"space-between"}>
+        <NavLink to={"/"}>
+          <Image src={`/logo.jpeg`} />
+        </NavLink>
         <Title>Create new Raffle</Title>
-        <Button>See My Raffles</Button>
+        <Button onClick={onClickHandler}>See My Raffles</Button>
       </Flex>
       <Divider my="lg" />
       <Grid mt={10}>
-        <Grid.Col span={4}>
-          <Card shadow="sm" p="lg" radius="md" withBorder>
-            <Card.Section>
-              <Image
-                src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
-                height={160}
-                alt="Norway"
+        {products.map((p) => (
+          <Grid.Col span={4} key={p._id}>
+            <Card shadow="sm" p="lg" radius="md" withBorder>
+              <Card.Section>
+                <Image src={p.image} height={160} alt={p.name} />
+              </Card.Section>
+              <Group position="apart" mt="md" mb="xs">
+                <Text weight={500}>{p.name}</Text>
+              </Group>
+              <Text size="sm" color="dimmed">
+                {p.description}
+              </Text>
+              <NumberInput
+                defaultValue={0}
+                placeholder="0"
+                label="Quantity"
+                description="Number of items to participate in the Raffle"
+                radius="md"
+                withAsterisk
               />
-            </Card.Section>
-
-            <Group position="apart" mt="md" mb="xs">
-              <Text weight={500}>Norway Fjord Adventures</Text>
-              <Badge color="pink" variant="light">
-                On Sale
-              </Badge>
-            </Group>
-
-            <NumberInput
-              defaultValue={0}
-              placeholder="0"
-              label="Quantity"
-              description="Number of items to participate in the Raffle"
-              radius="md"
-              withAsterisk
-            />
-            <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-              Create new Raffle
-            </Button>
-          </Card>
-        </Grid.Col>
+              <Button
+                variant="light"
+                color="blue"
+                fullWidth
+                mt="md"
+                radius="md"
+              >
+                Create new Raffle
+              </Button>
+            </Card>
+          </Grid.Col>
+        ))}
       </Grid>
     </Container>
   );

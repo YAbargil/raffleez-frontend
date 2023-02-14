@@ -189,7 +189,7 @@ export default function SignUp() {
             {!loading ? (mode === "signup" ? "Sign Up" : "Log In") : null}
           </Button>
           <Divider my="sm" />
-          <NavLink to="/rafflez">
+          <NavLink to="/raffles">
             <Button variant="white">Or Continue as a Guest</Button>
           </NavLink>
         </Flex>

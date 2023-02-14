@@ -1,14 +1,17 @@
 import React from "react";
 import SignUp from "./SignUp";
-import { RaffleList } from "./Raffles/List";
+import { Raffles } from "./Raffles/List";
+import { UserRaffleList } from "./Raffles/MyRaffles";
 import { createBrowserRouter } from "react-router-dom";
 import { CreateRaffle } from "./CreateRaffle";
-
+import { Participate } from "./participate";
 const App = () => {
   // if user authenticated show app
   // if not show login / sign up
 
-  return <SignUp />;
+  // return <CreateRaffle />;
+  // return <SignUp />;
+  return <UserRaffleList />;
 };
 
 export const router = createBrowserRouter([
@@ -17,12 +20,20 @@ export const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/rafflez",
-    element: <RaffleList />,
+    path: "/user",
+    element: <UserRaffleList />,
   },
   {
-    path: "/create-raffle",
+    path: "user/create-raffle",
     element: <CreateRaffle />,
+  },
+  {
+    path: "/:raffleId/participate",
+    element: <Participate />,
+  },
+  {
+    path: "/raffles",
+    element: <Raffles />,
   },
 ]);
 

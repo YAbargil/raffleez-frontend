@@ -15,3 +15,18 @@ export function signup(username, password) {
 export function getMyRaffles() {
   return client.get(`/myraffles`);
 }
+export function getProducts() {
+  return client.get("/raffle/products");
+}
+
+export function endRaffle(raffleId) {
+  return client.get(`myraffles/${raffleId}/end`);
+}
+
+export function parcitipateRaffle(raffleId, data) {
+  return client.post(`raffle/${raffleId}/enter`, data);
+}
+
+export function getAllRaffles() {
+  return client.get("/allraffles");
+}
