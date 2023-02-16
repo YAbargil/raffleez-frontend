@@ -15,15 +15,15 @@ import {
 } from "@mantine/core";
 import React, { useState, useEffect } from "react";
 import { getProducts } from "./api";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useLocation, useNavigate, NavLink } from "react-router-dom";
 
 export const CreateRaffle = () => {
   const [products, setProducts] = useState<any[]>([]);
   const navigate = useNavigate();
 
-  const onClickHandler = async () => {
+  const onClickHandler = () => {
     try {
-      navigate("/myraffles");
+      navigate("/user");
     } catch (error) {
       console.log("error", error);
     }

@@ -30,3 +30,6 @@ export function parcitipateRaffle(raffleId, data) {
 export function getAllRaffles() {
   return client.get("/allraffles");
 }
+export function removeParticipant(raffleId, participantIndex) {
+  return client.get(`myraffles/${raffleId}/participants/${participantIndex}`);
+}

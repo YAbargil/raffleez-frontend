@@ -74,7 +74,10 @@ export const Participate = () => {
           </Button>
         </Group>
       </form>
-      {message === "" ? null : <Text size="sm">{message}</Text>}
+      <br></br>
+      <Group position="center">
+        {message === "" ? null : <Text size="xl">{message}</Text>}
+      </Group>
     </Box>
   );
 };

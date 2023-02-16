@@ -190,7 +190,7 @@ export default function SignUp() {
           </Button>
           <Divider my="sm" />
           <NavLink to="/raffles">
-            <Button variant="white">Or Continue as a Guest</Button>
+            <Button variant="white">Continue as a Guest</Button>
           </NavLink>
         </Flex>
       </Paper>

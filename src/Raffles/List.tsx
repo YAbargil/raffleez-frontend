@@ -39,7 +39,7 @@ export const Raffles = () => {
       <NavLink to={"/"}>
         <Image src={`/logo.jpeg`} />
       </NavLink>
-      <Title>My Raffles</Title>
+      <Title> Raffles</Title>
       <Flex justify={"space-between"}></Flex>
       <Divider my="lg" />
       <Grid mt={10}>
