@@ -36,12 +36,14 @@ export const Raffles = () => {
 
   return (
     <Container mt="lg">
-      <NavLink to={"/"}>
-        <Image src={`/logo.jpeg`} />
-      </NavLink>
+      <Group position="center">
+        <NavLink to={"/"}>
+          <Image height={202} width={408} fit="contain" src={`/logo.jpeg`} />
+        </NavLink>
+      </Group>
       <Title> Raffles</Title>
       <Flex justify={"space-between"}></Flex>
-      <Divider my="lg" />
+      <Divider size={3} my="xl" />
       <Grid mt={10}>
         {raffles.map((r) => (
           <Grid.Col span={4} key={r.raffleId}>
@@ -52,18 +54,30 @@ export const Raffles = () => {
               <Group position="apart" mt="md" mb="xs">
                 <Text weight={900}>{r.name}</Text>
               </Group>
-              <Badge color="pink" variant="gradient">
-                ACTIVE
-              </Badge>
+              {r.active ? (
+                <Badge color="pink" variant="gradient">
+                  ACTIVE
+                </Badge>
+              ) : (
+                <Badge color="pink" variant="light">
+                  ENDED
+                </Badge>
+              )}
               <br />
-              <br />
-              <Group position="apart" mt="md" mb="xs">
-                <Text weight={100}>Quantity: {r.quantity}</Text>
+              <Group position="center" mt="md" mb="xs">
+                <Text size="md" weight={400}>
+                  Quantity: {r.quantity}
+                </Text>
               </Group>
               <br />
-              <br />
               <NavLink to={`/${r.raffleId}/participate`}>
-                <Button color="indigo" radius="xs" fullWidth uppercase>
+                <Button
+                  color="indigo"
+                  radius="xs"
+                  fullWidth
+                  uppercase
+                  disabled={!r.active}
+                >
                   ENTER RAFFLE
                 </Button>
               </NavLink>

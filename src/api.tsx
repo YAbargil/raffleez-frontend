@@ -4,6 +4,12 @@ const baseUrl = `https://raffleez.onrender.com`;
 
 const client = axios.create({ baseURL: baseUrl });
 
+export function setTokenDefaultHeader() {
+  client.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${window.localStorage.getItem("accessToken")}`;
+}
+
 export function login(username, password) {
   return client.post(`/login`, { username, password });
 }
@@ -32,4 +38,8 @@ export function getAllRaffles() {
 }
 export function removeParticipant(raffleId, participantIndex) {
   return client.get(`myraffles/${raffleId}/participants/${participantIndex}`);
+}
+
+export function createRaffle(productId, name, quantity) {
+  return client.post("/myraffles/create", { productId, name, quantity });
 }

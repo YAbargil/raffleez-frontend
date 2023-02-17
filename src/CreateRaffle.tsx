@@ -1,10 +1,8 @@
 import {
-  Badge,
   Button,
   Card,
   Container,
   Group,
-  List,
   Title,
   Text,
   Image,
@@ -12,10 +10,14 @@ import {
   NumberInput,
   Flex,
   Divider,
+  LoadingOverlay,
+  TextInput,
 } from "@mantine/core";
 import React, { useState, useEffect } from "react";
-import { getProducts } from "./api";
-import { useLocation, useNavigate, NavLink } from "react-router-dom";
+import { createRaffle, getProducts } from "./api";
+import { useNavigate, NavLink } from "react-router-dom";
+import axios from "axios";
+import { CreateRaffleCard } from "./CreateRaffleCard";
 
 export const CreateRaffle = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -41,45 +43,20 @@ export const CreateRaffle = () => {
   return (
     <Container mt="lg">
       <Flex justify={"space-between"}>
-        <NavLink to={"/"}>
-          <Image src={`/logo.jpeg`} />
-        </NavLink>
-        <Title>Create new Raffle</Title>
-        <Button onClick={onClickHandler}>See My Raffles</Button>
+        <Group position="center">
+          <NavLink to={"/"}>
+            <Image height={202} width={408} fit="contain" src={`/logo.jpeg`} />
+          </NavLink>
+        </Group>
       </Flex>
+      <Group position="right">
+        <Button onClick={onClickHandler}>See My Raffles</Button>
+      </Group>
+      <Title>Create new Raffle</Title>
       <Divider my="lg" />
       <Grid mt={10}>
         {products.map((p) => (
-          <Grid.Col span={4} key={p._id}>
-            <Card shadow="sm" p="lg" radius="md" withBorder>
-              <Card.Section>
-                <Image src={p.image} height={160} alt={p.name} />
-              </Card.Section>
-              <Group position="apart" mt="md" mb="xs">
-                <Text weight={500}>{p.name}</Text>
-              </Group>
-              <Text size="sm" color="dimmed">
-                {p.description}
-              </Text>
-              <NumberInput
-                defaultValue={0}
-                placeholder="0"
-                label="Quantity"
-                description="Number of items to participate in the Raffle"
-                radius="md"
-                withAsterisk
-              />
-              <Button
-                variant="light"
-                color="blue"
-                fullWidth
-                mt="md"
-                radius="md"
-              >
-                Create new Raffle
-              </Button>
-            </Card>
-          </Grid.Col>
+          <CreateRaffleCard product={p} />
         ))}
       </Grid>
     </Container>

@@ -87,8 +87,8 @@ function PasswordInputComponent({ value = "", onChange }) {
       />
       {focused && (
         <PasswordRequirement
-          label="Has at least 6 characters"
-          meets={value.length > 5}
+          label="Has at least 5 characters"
+          meets={value.length > 4}
         />
       )}
     </div>
@@ -151,8 +151,9 @@ export default function SignUp() {
     setLoading(true);
     try {
       const response = await api[mode](username, password);
-      navigate("/create-raffle");
+      navigate("/user");
       window.localStorage.accessToken = response.data.token;
+      api.setTokenDefaultHeader();
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -165,9 +166,6 @@ export default function SignUp() {
       <Paper shadow="sm" radius="lg" p="xl" withBorder>
         <Flex direction={"column"} gap={10}>
           <Image src={`/logo.jpeg`} />
-          {/* <Title align="center" order={1}>
-            Rafflez 👟
-          </Title> */}
           <Tabs value={mode} variant="pills" defaultValue="first">
             <Tabs.List position="center">
               <Tabs.Tab onClick={() => setMode("login")} value="login">

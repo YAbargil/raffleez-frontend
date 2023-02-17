@@ -6,8 +6,6 @@ import {
   Title,
   Box,
   Text,
-  Paper,
-  Flex,
   Image,
 } from "@mantine/core";
 import React, { useState } from "react";
@@ -21,19 +19,10 @@ export const Participate = () => {
     location.pathname.lastIndexOf("/")
   );
   const [message, setMessage] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
 
   const onSumbitHandler = async (values) => {
     try {
-      console.log(values);
-      setName(values.name);
-      setEmail(values.email);
-      const json = {
-        name: name,
-        email: email,
-      };
-      const result = await parcitipateRaffle(raffleId, json);
+      const result = await parcitipateRaffle(raffleId, values);
       console.log("response:", result);
       setMessage(result.data.msg);
     } catch (error) {
@@ -74,7 +63,6 @@ export const Participate = () => {
           </Button>
         </Group>
       </form>
-      <br></br>
       <Group position="center">
         {message === "" ? null : <Text size="xl">{message}</Text>}
       </Group>
