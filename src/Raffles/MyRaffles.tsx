@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from "react";
 
-import axios from "axios";
 import {
-  Alert,
-  Collapse,
-  Box,
-  List,
-  Avatar,
-  Badge,
   Button,
   Container,
   Group,
   Title,
-  Text,
   Image,
   Grid,
   Flex,
   Divider,
 } from "@mantine/core";
-import { useLocation, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { RaffleHandler } from "../rafflesHandler";
 import { getMyRaffles } from "../api";
 
 export const UserRaffleList = () => {
   const [raffles, setRaffles] = useState<any[]>([]);
 
+  const updateParticipants = (participants, id) => {
+    const index = raffles.findIndex((r) => r.raffleId === id);
+    const current = raffles[index];
+    current.nominees = participants;
+
+    const newState = [...raffles];
+    newState[index] = current;
+    setRaffles(newState);
+  };
   useEffect(() => {
     const fetchUserRaffles = async () => {
       try {
@@ -55,7 +56,7 @@ export const UserRaffleList = () => {
       <Divider my="lg" />
       <Grid mt={10}>
         {raffles.map((r) => (
-          <RaffleHandler raffle={r} />
+          <RaffleHandler raffle={r} updateParticipants={updateParticipants} />
         ))}
       </Grid>
     </Container>

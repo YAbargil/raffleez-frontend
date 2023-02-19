@@ -12,6 +12,7 @@ import {
   Image,
   Grid,
   Accordion,
+  ScrollArea,
 } from "@mantine/core";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,7 +24,7 @@ interface AccordionLabelProps {
   description: string;
 }
 
-export const RaffleHandler = ({ raffle }) => {
+export const RaffleHandler = ({ raffle, updateParticipants }) => {
   const [opened, setOpened] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -128,12 +129,17 @@ export const RaffleHandler = ({ raffle }) => {
           onClose={() => setOpened(false)}
           padding="xl"
           size="xl"
+          lockScroll={false}
         >
-          <Title>Participants</Title>
-          <ParticipateDrawer
-            participants={raffle.nominees}
-            isActive={raffle.active}
-          />
+          <ScrollArea style={{ height: "100%" }}>
+            <Title>Participants</Title>
+            <ParticipateDrawer
+              participants={raffle.nominees}
+              isActive={raffle.active}
+              raffleId={raffle.raffleId}
+              updateParticipants={updateParticipants}
+            />
+          </ScrollArea>
         </Drawer>
         <LoadingOverlay visible={loading} overlayBlur={2} />
         <Button

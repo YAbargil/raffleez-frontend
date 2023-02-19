@@ -6,15 +6,11 @@ import { createBrowserRouter, NavLink } from "react-router-dom";
 import { CreateRaffle } from "./CreateRaffle";
 import { Participate } from "./participate";
 const App = () => {
-  // if user authenticated show app
-  // if not show login / sign up
-  if (window.localStorage.token !== undefined) {
-    console.log(window.localStorage.token);
+  if (window.localStorage.getItem("accessToken")) {
     return <UserRaffleList></UserRaffleList>;
+  } else {
+    return <SignUp />;
   }
-  //return <CreateRaffle />;
-  return <SignUp />;
-  //return <UserRaffleList />;
 };
 
 export const router = createBrowserRouter([

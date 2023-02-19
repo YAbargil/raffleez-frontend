@@ -1,22 +1,16 @@
 import {
   Button,
-  Card,
   Container,
   Group,
   Title,
-  Text,
   Image,
   Grid,
-  NumberInput,
   Flex,
   Divider,
-  LoadingOverlay,
-  TextInput,
 } from "@mantine/core";
 import React, { useState, useEffect } from "react";
-import { createRaffle, getProducts } from "./api";
+import { getProducts } from "./api";
 import { useNavigate, NavLink } from "react-router-dom";
-import axios from "axios";
 import { CreateRaffleCard } from "./CreateRaffleCard";
 
 export const CreateRaffle = () => {

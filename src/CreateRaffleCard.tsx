@@ -1,15 +1,11 @@
 import {
   Button,
   Card,
-  Container,
   Group,
-  Title,
   Text,
   Image,
   Grid,
   NumberInput,
-  Flex,
-  Divider,
   LoadingOverlay,
   TextInput,
 } from "@mantine/core";

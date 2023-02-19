@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Badge,
   Button,
   Card,
@@ -9,7 +8,6 @@ import {
   Text,
   Image,
   Grid,
-  Accordion,
   Flex,
   Divider,
 } from "@mantine/core";
