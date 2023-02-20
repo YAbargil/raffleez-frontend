@@ -6,7 +6,11 @@ import { createBrowserRouter, NavLink } from "react-router-dom";
 import { CreateRaffle } from "./CreateRaffle";
 import { Participate } from "./participate";
 const App = () => {
-  if (window.localStorage.getItem("accessToken")) {
+  if (
+    window.localStorage.getItem("accessToken") &&
+    window.location.pathname == "/"
+  ) {
+    console.log(window.location.pathname);
     return <UserRaffleList></UserRaffleList>;
   } else {
     return <SignUp />;
@@ -14,10 +18,6 @@ const App = () => {
 };
 
 export const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
   {
     path: "/user",
     element: <UserRaffleList />,
@@ -33,6 +33,10 @@ export const router = createBrowserRouter([
   {
     path: "/raffles",
     element: <Raffles />,
+  },
+  {
+    path: "/",
+    element: <App />,
   },
 ]);
 
