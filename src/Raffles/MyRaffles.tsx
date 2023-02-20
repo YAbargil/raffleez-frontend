@@ -12,7 +12,7 @@ import {
 } from "@mantine/core";
 import { NavLink } from "react-router-dom";
 import { RaffleHandler } from "../rafflesHandler";
-import { getMyRaffles } from "../api";
+import { getMyRaffles, getRaffle } from "../api";
 
 export const UserRaffleList = () => {
   const [raffles, setRaffles] = useState<any[]>([]);
@@ -24,6 +24,15 @@ export const UserRaffleList = () => {
 
     const newState = [...raffles];
     newState[index] = current;
+    setRaffles(newState);
+  };
+
+  const updateRaffles = async (raffleId) => {
+    const index = raffles.findIndex((r) => r.raffleId === raffleId);
+    const current = await getRaffle(raffleId);
+    console.log(current.data.raffle);
+    const newState = [...raffles];
+    newState[index] = current.data.raffle;
     setRaffles(newState);
   };
   useEffect(() => {
@@ -48,6 +57,9 @@ export const UserRaffleList = () => {
       </Group>
       <Flex justify={"space-between"}></Flex>
       <Group position="right">
+        <NavLink to={"/raffles"}>
+          <Button size="lg">See All Raffles</Button>
+        </NavLink>
         <NavLink to={"/user/create-raffle"}>
           <Button size="lg">Create New Raffle</Button>
         </NavLink>
@@ -56,7 +68,11 @@ export const UserRaffleList = () => {
       <Divider my="lg" />
       <Grid mt={10}>
         {raffles.map((r) => (
-          <RaffleHandler raffle={r} updateParticipants={updateParticipants} />
+          <RaffleHandler
+            raffle={r}
+            updateParticipants={updateParticipants}
+            updateRaffles={updateRaffles}
+          />
         ))}
       </Grid>
     </Container>

@@ -14,15 +14,18 @@ import { createRaffle } from "./api";
 
 export const CreateRaffleCard = ({ product }) => {
   const [name, setName] = useState("");
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [disabledButton, setDisabledButton] = useState(false);
 
   const onCreateClick = async () => {
     setLoading(true);
     try {
-      //
       const response = await createRaffle(product._id, name, quantity);
       console.log(response.data);
+      setMessage("Raffle Created Successfully!");
+      setDisabledButton(true);
     } catch (error) {
       console.error(error);
     } finally {
@@ -72,9 +75,11 @@ export const CreateRaffleCard = ({ product }) => {
           mt="md"
           radius="md"
           onClick={onCreateClick}
+          disabled={disabledButton}
         >
           Create new Raffle
         </Button>
+        <Text weight={300}>{message}</Text>
       </Card>
     </Grid.Col>
   );

@@ -24,7 +24,11 @@ interface AccordionLabelProps {
   description: string;
 }
 
-export const RaffleHandler = ({ raffle, updateParticipants }) => {
+export const RaffleHandler = ({
+  raffle,
+  updateParticipants,
+  updateRaffles,
+}) => {
   const [opened, setOpened] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -49,7 +53,7 @@ export const RaffleHandler = ({ raffle, updateParticipants }) => {
       result.status == 200
         ? setMessage("Raffle Ended, Emails sent !")
         : setMessage("Error eccoured");
-      setLoading(false);
+      updateRaffles(raffleId);
     } catch (error) {
       console.log("error:", error);
     } finally {

@@ -19,6 +19,7 @@ export function signup(username, password) {
 }
 
 export function getMyRaffles() {
+  setTokenDefaultHeader();
   return client.get(`/myraffles`);
 }
 export function getProducts() {
@@ -26,6 +27,7 @@ export function getProducts() {
 }
 
 export function endRaffle(raffleId) {
+  setTokenDefaultHeader();
   return client.get(`myraffles/${raffleId}/end`);
 }
 
@@ -41,5 +43,11 @@ export function removeParticipant(raffleId, participantIndex) {
 }
 
 export function createRaffle(productId, name, quantity) {
+  setTokenDefaultHeader();
   return client.post("/myraffles/create", { productId, name, quantity });
+}
+
+export function getRaffle(raffleId) {
+  setTokenDefaultHeader();
+  return client.get(`/myraffles/${raffleId}`);
 }
