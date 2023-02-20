@@ -151,7 +151,7 @@ export const RaffleHandler = ({
           radius="xs"
           fullWidth
           uppercase
-          disabled={!raffle.active}
+          disabled={!raffle.active || raffle.nominees.length < raffle.quantity}
           onClick={() => {
             endRaffleHandler(raffle.raffleId);
           }}
